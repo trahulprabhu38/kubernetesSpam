@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: myapp
+    type: front-end
+
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+
+  replicas: 3
+  selector:
+    matchLabels:
+      type: front-end
+
+
+ 
+#scaling :
+# kubectl scale --replicas=6 -f replicaSet.yaml
+# kubectl scale --replicas=6 replicaset myapp-replicaset
+# kubectl scale --replicas=6 rs myapp-replicaset
+# kubectl replace -f replicaSet.yaml ---> here u have to manually change it.
